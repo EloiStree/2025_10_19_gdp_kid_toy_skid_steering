@@ -1,3 +1,4 @@
+class_name SkidCarMoveByWheelSize
 extends Node
 
 # Source https://github.com/EloiStree/2023_11_01_upm_KidToyCarSkidSteeringCode/blob/main/Runtime/ExostCarRCDefaultMono.cs

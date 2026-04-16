@@ -1,3 +1,4 @@
+class_name SkidCarWheelRotation
 extends Node3D
 
 @export var is_wheel_motor_on: bool = false
