@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://b5akc3tino8jm"]
+
+[ext_resource type="PackedScene" uid="uid://badmbu56g6cgk" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_wheel.tscn" id="1_bko0p"]
+[ext_resource type="Script" uid="uid://5hk6ulfq1pu8" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_input_relay.gd" id="1_lkafa"]
+[ext_resource type="PackedScene" uid="uid://co6ob4echhxai" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_body.tscn" id="2_uivu6"]
+[ext_resource type="Script" uid="uid://ck6asm2ortscn" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_move_by_four_wheel_size.gd" id="4_dvj6y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3jt5p"]
+size = Vector3(0.15765381, 0.073913574, 0.17523193)
+
+[node name="ToyCarBasic" type="RigidBody3D" unique_id=389129152]
+script = ExtResource("1_lkafa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=982095127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00015258789, 0.0010070801, 0.00015258789)
+shape = SubResource("BoxShape3D_3jt5p")
+
+[node name="WheelFrontLeft" parent="." unique_id=2085924323 instance=ExtResource("1_bko0p")]
+transform = Transform3D(-1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, -0.037, 0, -0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelFrontRight" parent="." unique_id=958408017 instance=ExtResource("1_bko0p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037, 0, -0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelBackLeft" parent="." unique_id=2053702472 instance=ExtResource("1_bko0p")]
+transform = Transform3D(-1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, -0.037, 0, 0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelBackRight" parent="." unique_id=1013902647 instance=ExtResource("1_bko0p")]
+transform = Transform3D(1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, 0.03695278, 0, 0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="SkidCarBody" parent="." unique_id=775516167 instance=ExtResource("2_uivu6")]
+
+[node name="WheelHeight" type="Node3D" parent="." unique_id=1050440298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037507996, 0.032506943, 0.051660903)
+
+[node name="NodeScript" type="Node" parent="." unique_id=1076927702]
+
+[node name="MoveFromWheelHeight" type="Node" parent="NodeScript" unique_id=922547300 node_paths=PackedStringArray("what_to_move", "exost_car_to_move_direction", "pivot_left_front", "pivot_right_front", "pivot_left_back", "pivot_right_back", "pivot_right_back_wheel_top_anchor")]
+script = ExtResource("4_dvj6y")
+what_to_move = NodePath("../..")
+exost_car_to_move_direction = NodePath("../..")
+pivot_left_front = NodePath("../../WheelFrontLeft")
+pivot_right_front = NodePath("../../WheelFrontRight")
+pivot_left_back = NodePath("../../WheelBackLeft")
+pivot_right_back = NodePath("../../WheelBackRight")
+pivot_right_back_wheel_top_anchor = NodePath("../../WheelHeight")
+
+[connection signal="on_left_down_button_on" from="." to="NodeScript/MoveFromWheelHeight" method="set_motor_left_back"]
+[connection signal="on_left_up_button_on" from="." to="NodeScript/MoveFromWheelHeight" method="set_motor_left_front"]
+[connection signal="on_right_down_button_on" from="." to="NodeScript/MoveFromWheelHeight" method="set_motor_right_back"]
+[connection signal="on_right_up_button_on" from="." to="NodeScript/MoveFromWheelHeight" method="set_motor_right_front"]
+[connection signal="on_back_left_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelBackLeft" method="set_motor_from_percent11"]
+[connection signal="on_back_right_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelBackRight" method="set_motor_from_percent11"]
+[connection signal="on_front_left_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelFrontLeft" method="set_motor_from_percent11"]
+[connection signal="on_front_right_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelFrontRight" method="set_motor_from_percent11"]

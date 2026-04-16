@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://wxqepdsewlpy"]
+
+[ext_resource type="Script" uid="uid://bma4sh5lekwu5" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input.gd" id="1_ls438"]
+[ext_resource type="PackedScene" uid="uid://dcwvhbrml7od6" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/drop/toy_car_four_wheel_with_character.tscn" id="2_4jfu4"]
+
+[node name="ToyCarFourWheelWithCharacteAndKeys" type="Node3D" unique_id=1670154158]
+
+[node name="NodeKeyboard" type="Node" parent="." unique_id=299466462]
+script = ExtResource("1_ls438")
+
+[node name="ToyCarFourWheelWithCharacter" parent="." unique_id=652630456 instance=ExtResource("2_4jfu4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75994873, 0)
+
+[connection signal="on_left_back" from="NodeKeyboard" to="ToyCarFourWheelWithCharacter" method="set_left_down_button_down"]
+[connection signal="on_left_front" from="NodeKeyboard" to="ToyCarFourWheelWithCharacter" method="set_left_up_button_down"]
+[connection signal="on_right_back" from="NodeKeyboard" to="ToyCarFourWheelWithCharacter" method="set_right_down_button_down"]
+[connection signal="on_right_front" from="NodeKeyboard" to="ToyCarFourWheelWithCharacter" method="set_right_up_button_down"]

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://4iejt8j41ewh"]
+
+[ext_resource type="Texture2D" uid="uid://cuapagog2lgia" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_body_car_wheel_texture.png" id="1_72k08"]
+
+[resource]
+shading_mode = 0
+albedo_texture = ExtResource("1_72k08")

@@ -34,7 +34,9 @@ func set_motor_from_percent11(percent11:float):
 	else :
 		is_motor_rotating_inverse=true
 		
-	
+
+func set_rotation_speed_degrees_per_second(speed: float) -> void:
+	rotation_speed_when_on = speed
 		
 
 func set_motor_on(is_on: bool) -> void:

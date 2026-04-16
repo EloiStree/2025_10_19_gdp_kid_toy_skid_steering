@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://dmhyxc8y8jkfc"]
+[gd_scene format=4 uid="uid://dmhyxc8y8jkfc"]
 
-[ext_resource type="Texture2D" uid="uid://bub4eqot0adjp" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/CarBodyCarWheelColor.png" id="1_i75g4"]
+[ext_resource type="Texture2D" uid="uid://bub4eqot0adjp" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_body_car_wheel_color.png" id="1_i75g4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3m4gm"]
 resource_name = "Steel_-_Satin"

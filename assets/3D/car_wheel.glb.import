@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://x41u0dg5xwsh"
-path="res://.godot/imported/ToyCarBody.fbx-f2f38a528291f2031df3226a3e1c6bec.scn"
+uid="uid://dq6gwm0jmp4rf"
+path="res://.godot/imported/car_wheel.glb-a40826e6531de3e251b492d5ef9d5c99.scn"
 
 [deps]
 
-source_file="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/ToyCarBody.fbx"
-dest_files=["res://.godot/imported/ToyCarBody.fbx-f2f38a528291f2031df3226a3e1c6bec.scn"]
+source_file="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_wheel.glb"
+dest_files=["res://.godot/imported/car_wheel.glb-a40826e6531de3e251b492d5ef9d5c99.scn"]
 
 [params]
 
@@ -30,7 +30,7 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
@@ -38,7 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
-fbx/naming_version=2
+gltf/naming_version=2
+gltf/embedded_image_handling=1

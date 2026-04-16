@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://co6ob4echhxai"]
+
+[ext_resource type="PackedScene" uid="uid://yncsx3a38qqt" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_body.glb" id="1_csdoo"]
+[ext_resource type="PackedScene" uid="uid://dmhyxc8y8jkfc" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/toy_car_body.tscn" id="1_sfg7x"]
+[ext_resource type="Material" uid="uid://bgelrdnqwi78" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/mat_car_direction_unlit_texture.tres" id="2_dw31r"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sfg7x"]
+height = 0.07128906
+radius = 0.021972656
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xyr1w"]
+size = Vector3(0.048706055, 0.07055664, 0.08984375)
+
+[node name="SkidCarBody" type="Node3D" unique_id=916714954]
+
+[node name="car_body" parent="." unique_id=622281076 instance=ExtResource("1_csdoo")]
+
+[node name="car_body" parent="car_body" index="0" unique_id=228936314]
+transform = Transform3D(-1, 8.742278e-08, 0, 8.742278e-08, 1, -8.742278e-08, -7.642742e-15, -8.742278e-08, -1, 0, 0, 0)
+surface_material_override/0 = ExtResource("2_dw31r")
+
+[node name="ToyCarBody" parent="." unique_id=615462147 instance=ExtResource("1_sfg7x")]
+visible = false
+
+[node name="Area3DBodyBack" type="Area3D" parent="." unique_id=277217524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.042606086)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DBodyBack" unique_id=198534911]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_sfg7x")
+
+[node name="Area3DBodyFront" type="Area3D" parent="." unique_id=1236855126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.042606078)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DBodyFront" unique_id=596404951]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_sfg7x")
+
+[node name="Area3DBodyCenter" type="Area3D" parent="." unique_id=1358443875]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DBodyCenter" unique_id=1780534187]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -8.003792e-12, -0.00018310547, 0)
+shape = SubResource("BoxShape3D_xyr1w")
+
+[editable path="car_body"]

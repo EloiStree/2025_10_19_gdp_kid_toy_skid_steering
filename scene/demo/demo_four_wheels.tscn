@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://sof2ltbi73lf"]
+
+[ext_resource type="Script" uid="uid://bma4sh5lekwu5" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input.gd" id="1_4n5n8"]
+[ext_resource type="PackedScene" uid="uid://b5akc3tino8jm" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_with_script.tscn" id="2_k11fh"]
+[ext_resource type="Script" uid="uid://5hk6ulfq1pu8" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_input_relay.gd" id="3_tl1m1"]
+[ext_resource type="PackedScene" uid="uid://badmbu56g6cgk" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_wheel.tscn" id="4_ukvha"]
+[ext_resource type="PackedScene" uid="uid://co6ob4echhxai" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_body.tscn" id="5_2ofoy"]
+[ext_resource type="Script" uid="uid://ck6asm2ortscn" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_move_by_four_wheel_size.gd" id="6_5aha1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_acghe"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_acghe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3jt5p"]
+size = Vector3(0.15765381, 0.073913574, 0.17523193)
+
+[node name="Node3D" type="Node3D" unique_id=1244176786]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1853554868]
+transform = Transform3D(1, 0, 0, 0, 0.9146848, 0.40416798, 0, -0.40416798, 0.9146848, 0, 1.0073242, 1.6466064)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=755282647]
+transform = Transform3D(1, 0, 0, 0, 0.85225695, 0.5231235, 0, -0.5231235, 0.85225695, 0, 0.7186279, 0.27593994)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1799317134]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 4, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_acghe")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1718102898]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1046098770]
+shape = SubResource("WorldBoundaryShape3D_acghe")
+
+[node name="ToyCarBasicWithDefaultInput" type="Node3D" parent="." unique_id=124561192]
+
+[node name="NodeInput" type="Node" parent="ToyCarBasicWithDefaultInput" unique_id=1303062387]
+
+[node name="NodeKeyboard" type="Node" parent="ToyCarBasicWithDefaultInput/NodeInput" unique_id=913655194]
+script = ExtResource("1_4n5n8")
+
+[node name="ToyCarBasic" parent="ToyCarBasicWithDefaultInput" unique_id=1167870563 instance=ExtResource("2_k11fh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75994873, 0)
+
+[node name="MoveFromWheelHeight" parent="ToyCarBasicWithDefaultInput/ToyCarBasic/NodeScript" parent_id_path=PackedInt32Array(1167870563, 1076927702) index="0" unique_id=922547300]
+time_to_do_full_rotation_on_pivot = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=229789045]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1435502654]
+anchors_preset = -1
+anchor_right = 0.097
+anchor_bottom = 0.293
+offset_right = 2.2559967
+offset_bottom = 1.1359863
+
+[node name="CheckButtonTL" type="CheckButton" parent="CanvasLayer/VBoxContainer" unique_id=880581293]
+layout_mode = 2
+text = "TL"
+
+[node name="CheckButtonTR" type="CheckButton" parent="CanvasLayer/VBoxContainer" unique_id=550215774]
+layout_mode = 2
+text = "TR"
+
+[node name="CheckButtonDL" type="CheckButton" parent="CanvasLayer/VBoxContainer" unique_id=679412462]
+layout_mode = 2
+text = "DL"
+
+[node name="CheckButtonDR" type="CheckButton" parent="CanvasLayer/VBoxContainer" unique_id=1057500557]
+layout_mode = 2
+text = "DR"
+
+[node name="ToyCarFourWheelWithCharacteAndKeys" type="Node3D" parent="." unique_id=1670154158]
+
+[node name="NodeKeyboard" type="Node" parent="ToyCarFourWheelWithCharacteAndKeys" unique_id=299466462]
+script = ExtResource("1_4n5n8")
+
+[node name="ToyCarFourWheelWithCharacter" type="CharacterBody3D" parent="ToyCarFourWheelWithCharacteAndKeys" unique_id=652630456]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75994873, 0)
+floor_constant_speed = true
+script = ExtResource("3_tl1m1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=990526287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00015258789, 0.0010070801, 0.00015258789)
+shape = SubResource("BoxShape3D_3jt5p")
+
+[node name="WheelFrontLeft" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=1651142550 instance=ExtResource("4_ukvha")]
+transform = Transform3D(-1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, -0.037, 0, -0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelFrontRight" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=597133832 instance=ExtResource("4_ukvha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037, 0, -0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelBackLeft" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=1220956264 instance=ExtResource("4_ukvha")]
+transform = Transform3D(-1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, -0.037, 0, 0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="WheelBackRight" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=900861602 instance=ExtResource("4_ukvha")]
+transform = Transform3D(1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, 0.03695278, 0, 0.051)
+is_motor_rotating_inverse = true
+rotation_speed_when_on = 360.0
+
+[node name="SkidCarBody" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=916714954 instance=ExtResource("5_2ofoy")]
+
+[node name="WheelHeight" type="Node3D" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=659718632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037507996, 0.032506943, 0.051660903)
+
+[node name="NodeScript" type="Node" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" unique_id=999850979]
+
+[node name="MoveFromWheelHeight" type="Node" parent="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript" unique_id=274751615 node_paths=PackedStringArray("what_to_move", "exost_car_to_move_direction", "pivot_left_front", "pivot_right_front", "pivot_left_back", "pivot_right_back", "pivot_right_back_wheel_top_anchor", "character_controller")]
+script = ExtResource("6_5aha1")
+what_to_move = NodePath("../..")
+exost_car_to_move_direction = NodePath("../..")
+pivot_left_front = NodePath("../../WheelFrontLeft")
+pivot_right_front = NodePath("../../WheelFrontRight")
+pivot_left_back = NodePath("../../WheelBackLeft")
+pivot_right_back = NodePath("../../WheelBackRight")
+pivot_right_back_wheel_top_anchor = NodePath("../../WheelHeight")
+character_controller = NodePath("../..")
+fake_gravity_amount = 4.0
+
+[connection signal="on_left_back" from="ToyCarBasicWithDefaultInput/NodeInput/NodeKeyboard" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_left_down_button_down"]
+[connection signal="on_left_front" from="ToyCarBasicWithDefaultInput/NodeInput/NodeKeyboard" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_left_up_button_down"]
+[connection signal="on_right_back" from="ToyCarBasicWithDefaultInput/NodeInput/NodeKeyboard" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_right_down_button_down"]
+[connection signal="on_right_front" from="ToyCarBasicWithDefaultInput/NodeInput/NodeKeyboard" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_right_up_button_down"]
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/CheckButtonTL" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_left_up_button_down"]
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/CheckButtonTR" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_right_up_button_down"]
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/CheckButtonDL" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_left_down_button_down"]
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/CheckButtonDR" to="ToyCarBasicWithDefaultInput/ToyCarBasic" method="set_right_down_button_down"]
+[connection signal="on_left_back" from="ToyCarFourWheelWithCharacteAndKeys/NodeKeyboard" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" method="set_left_down_button_down"]
+[connection signal="on_left_front" from="ToyCarFourWheelWithCharacteAndKeys/NodeKeyboard" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" method="set_left_up_button_down"]
+[connection signal="on_right_back" from="ToyCarFourWheelWithCharacteAndKeys/NodeKeyboard" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" method="set_right_down_button_down"]
+[connection signal="on_right_front" from="ToyCarFourWheelWithCharacteAndKeys/NodeKeyboard" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" method="set_right_up_button_down"]
+[connection signal="on_left_down_button_on" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_left_back"]
+[connection signal="on_left_up_button_on" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_left_front"]
+[connection signal="on_right_down_button_on" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_right_back"]
+[connection signal="on_right_up_button_on" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_right_front"]
+[connection signal="on_back_left_motor_speed_changed" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/WheelBackLeft" method="set_motor_from_percent11"]
+[connection signal="on_back_right_motor_speed_changed" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/WheelBackRight" method="set_motor_from_percent11"]
+[connection signal="on_front_left_motor_speed_changed" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/WheelFrontLeft" method="set_motor_from_percent11"]
+[connection signal="on_front_right_motor_speed_changed" from="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarFourWheelWithCharacteAndKeys/ToyCarFourWheelWithCharacter/WheelFrontRight" method="set_motor_from_percent11"]
+
+[editable path="ToyCarBasicWithDefaultInput/ToyCarBasic"]

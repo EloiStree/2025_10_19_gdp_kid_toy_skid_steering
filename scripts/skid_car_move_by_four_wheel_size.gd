@@ -1,7 +1,9 @@
-class_name SkidCarMoveByWheelSize
+class_name SkidCarMoveByFourWheelSize
 extends Node
 
 # Source https://github.com/EloiStree/2023_11_01_upm_KidToyCarSkidSteeringCode/blob/main/Runtime/ExostCarRCDefaultMono.cs
+
+
 
 # --- INPUT BUTTON STATES ---
 var button_left_front_on: bool = false
@@ -10,7 +12,7 @@ var button_left_back_on: bool = false
 var button_right_back_on: bool = false
 
 # --- CAR PARAMETERS ---
-@export var forward_distance_per_second: float = 1.0
+@export var forward_distance_amplification: float = 1.0
 @export var time_to_do_full_rotation_on_pivot: float = 1.5
 var turn_hard_amplification: float = 1.3
 var turn_ratio_control: float = 1.0
@@ -42,6 +44,10 @@ enum RotateType { LEFT_FRONT, RIGHT_FRONT, LEFT_BACK, RIGHT_BACK }
 
 var is_car_good_side: bool = false
 
+@export_group("If you want to use CharacterBody3D")
+@export var character_controller: CharacterBody3D
+@export var use_fake_gravity_if_character: bool = true
+@export var fake_gravity_amount: float = 0.2
 
 
 # Define signals for each wheel
@@ -78,6 +84,11 @@ func set_wheel_state(left_front: float, right_front: float, left_back: float, ri
 		emit_signal("on_back_right_motor_speed_changed", right_back)
 		
 func _process(delta: float) -> void:
+
+	if character_controller and use_fake_gravity_if_character:
+		character_controller.velocity.y -= fake_gravity_amount * delta	
+		character_controller.move_and_collide(character_controller.velocity * delta)
+
 	if impossible_situation_of_buttons():
 		return
 
@@ -95,10 +106,12 @@ func _process(delta: float) -> void:
 		move_straight(delta, false)
 	elif turn_left_hard():
 		set_wheel_state(-1, 1, -1, 1)
-		turn_in_place(delta, true)
+		turn_in_place(delta, false)
+
 	elif turn_right_hard():
 		set_wheel_state(1, -1, 1, -1)
-		turn_in_place(delta, false)
+		turn_in_place(delta, true)
+		
 	elif turn_left_light():
 		set_wheel_state(0, 1, 0, 1)
 		if is_car_good_side:
@@ -125,6 +138,7 @@ func _process(delta: float) -> void:
 			rotate_around(RotateType.RIGHT_FRONT, delta, true)
 
 
+var forward_distance_amplification_per_second: float = 1.0
 # ---------------------------
 #  HELPER METHODS
 # ---------------------------
@@ -139,6 +153,7 @@ func compute_deducted_info() -> void:
 	distance_per_second = pivot_circle_distance / time_to_do_full_rotation_on_pivot
 	wheel_rotation_per_second = distance_per_second / wheel_distance_per_turn
 	wheel_rotation_angle_per_second = wheel_rotation_per_second * 360.0
+	forward_distance_amplification_per_second = distance_per_second *forward_distance_amplification
 
 
 func move_straight(delta: float, forward: bool = true) -> void:
@@ -153,10 +168,13 @@ func move_straight(delta: float, forward: bool = true) -> void:
 		dir = -dir
 
 	# Compute movement vector
-	var move_dir = dir * distance_per_second * delta * (1 if forward else -1)
+	var move_dir = dir * forward_distance_amplification_per_second * delta * (1 if forward else -1)
 
 	# Apply translation globally (world space)
-	what_to_move.global_translate(move_dir)
+	if character_controller != null:
+		character_controller.move_and_collide(move_dir)
+	else:
+		what_to_move.global_translate(move_dir)
 
 
 func turn_in_place(delta: float, left: bool = true) -> void:
