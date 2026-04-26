@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bub4eqot0adjp"
-path.s3tc="res://.godot/imported/car_body_car_wheel_color.png-30f579ba0a4978b67074ffe8f9915064.s3tc.ctex"
+path.etc2="res://.godot/imported/car_body_car_wheel_color.png-30f579ba0a4978b67074ffe8f9915064.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_body_car_wheel_color.png"
-dest_files=["res://.godot/imported/car_body_car_wheel_color.png-30f579ba0a4978b67074ffe8f9915064.s3tc.ctex"]
+dest_files=["res://.godot/imported/car_body_car_wheel_color.png-30f579ba0a4978b67074ffe8f9915064.etc2.ctex"]
 
 [params]
 

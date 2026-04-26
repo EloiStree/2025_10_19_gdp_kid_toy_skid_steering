@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cuapagog2lgia"
-path.s3tc="res://.godot/imported/car_body_car_wheel_texture.png-ac37f9b4814d9b9a6818013573ab3f36.s3tc.ctex"
+path.etc2="res://.godot/imported/car_body_car_wheel_texture.png-ac37f9b4814d9b9a6818013573ab3f36.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/car_body_car_wheel_texture.png"
-dest_files=["res://.godot/imported/car_body_car_wheel_texture.png-ac37f9b4814d9b9a6818013573ab3f36.s3tc.ctex"]
+dest_files=["res://.godot/imported/car_body_car_wheel_texture.png-ac37f9b4814d9b9a6818013573ab3f36.etc2.ctex"]
 
 [params]
 
