@@ -47,3 +47,7 @@ func set_right_up_button_down(is_on: bool) -> void:
 func set_right_down_button_down(is_on: bool) -> void:
 	right_down_button_on_state = is_on
 	emit_signal("on_right_down_button_on", is_on)
+
+
+func _on_node_keyboard_on_left_back(is_on: bool) -> void:
+	pass # Replace with function body.

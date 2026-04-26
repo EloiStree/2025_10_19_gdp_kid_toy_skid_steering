@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://b3i728kw1icgc"]
 
-[ext_resource type="Script" uid="uid://bma4sh5lekwu5" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input.gd" id="1_1r6gp"]
 [ext_resource type="Texture2D" uid="uid://bdegcyl24msbd" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/blender_grid.jpg" id="1_m0mny"]
-[ext_resource type="Script" uid="uid://5hk6ulfq1pu8" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_input_relay.gd" id="2_m0mny"]
-[ext_resource type="PackedScene" uid="uid://badmbu56g6cgk" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_wheel.tscn" id="3_7n1ho"]
-[ext_resource type="PackedScene" uid="uid://co6ob4echhxai" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_body.tscn" id="4_kkd4o"]
-[ext_resource type="Script" uid="uid://bebf17enlutax" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_move_by_double_wheel_size.gd" id="5_eyul8"]
+[ext_resource type="PackedScene" uid="uid://h2a7u7vj3wtw" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/drop/toy_car_two_wheel_character_with_keyboard.tscn" id="2_cahgo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i5anp"]
 
@@ -13,9 +9,6 @@
 albedo_texture = ExtResource("1_m0mny")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_eih0p"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3jt5p"]
-size = Vector3(0.15765381, 0.073913574, 0.17523193)
 
 [node name="Node3D" type="Node3D" unique_id=588232791]
 
@@ -29,70 +22,4 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7n1ho")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=784289797]
 shape = SubResource("WorldBoundaryShape3D_eih0p")
 
-[node name="NodeKeyboard" type="Node" parent="." unique_id=728680667]
-script = ExtResource("1_1r6gp")
-
-[node name="ToyCarTwoWheelCharacter" type="CharacterBody3D" parent="." unique_id=1483221493]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13470459, 0)
-script = ExtResource("2_m0mny")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ToyCarTwoWheelCharacter" unique_id=1503948100]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00015258789, 0.0010070801, 0.00015258789)
-shape = SubResource("BoxShape3D_3jt5p")
-
-[node name="WheelFrontLeft" parent="ToyCarTwoWheelCharacter" unique_id=1651142550 instance=ExtResource("3_7n1ho")]
-transform = Transform3D(-1, 0, 0, 0, 1, -8.742278e-08, 0, 8.742278e-08, 1, -0.037, 0, -0.051)
-is_motor_rotating_inverse = true
-rotation_speed_when_on = 360.0
-
-[node name="WheelFrontRight" parent="ToyCarTwoWheelCharacter" unique_id=919895427 instance=ExtResource("3_7n1ho")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037, 0, -0.051)
-is_motor_rotating_inverse = true
-rotation_speed_when_on = 360.0
-
-[node name="SkidCarBody" parent="ToyCarTwoWheelCharacter" unique_id=916714954 instance=ExtResource("4_kkd4o")]
-
-[node name="WheelHeight" type="Node3D" parent="ToyCarTwoWheelCharacter" unique_id=248571730]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059436783, 0.032506943, -0.050843872)
-
-[node name="NodeScript" type="Node" parent="ToyCarTwoWheelCharacter" unique_id=1670587940]
-
-[node name="MoveFromWheelHeight" type="Node" parent="ToyCarTwoWheelCharacter/NodeScript" unique_id=303753499 node_paths=PackedStringArray("what_to_move", "exost_car_to_move_direction", "pivot_left_front", "pivot_right_front", "pivot_right_wheel_top_anchor", "character_controller")]
-script = ExtResource("5_eyul8")
-forward_amplified_value = 2.0
-backward_amplified_value = 1.2
-time_to_do_full_rotation_on_pivot = 1.0
-what_to_move = NodePath("../..")
-exost_car_to_move_direction = NodePath("../..")
-pivot_left_front = NodePath("../../PivotLeftWheel")
-pivot_right_front = NodePath("../../PivotRightWheel")
-pivot_right_wheel_top_anchor = NodePath("../../WheelHeight")
-character_controller = NodePath("../..")
-fake_gravity_amount = 4.0
-
-[node name="Camera3D" type="Camera3D" parent="ToyCarTwoWheelCharacter" unique_id=1674978102]
-transform = Transform3D(1, 0, 0, 0, 0.8019842, 0.59734523, 0, -0.59734523, 0.8019842, 0, 0.21453857, 0.2640381)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="ToyCarTwoWheelCharacter/Camera3D" unique_id=1583209447]
-transform = Transform3D(1, 0, 0, 0, 0.99903524, -0.04391581, 0, 0.04391581, 0.99903524, 0, 0, 0)
-
-[node name="PivotLeftWheel" type="Node3D" parent="ToyCarTwoWheelCharacter" unique_id=154270548]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.061546803, 0, -0.054801933)
-
-[node name="PivotRightWheel" type="Node3D" parent="ToyCarTwoWheelCharacter" unique_id=1093130233]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059860587, 0, -0.054801933)
-
-[connection signal="on_left_back" from="NodeKeyboard" to="ToyCarTwoWheelCharacter" method="set_left_down_button_down"]
-[connection signal="on_left_front" from="NodeKeyboard" to="ToyCarTwoWheelCharacter" method="set_left_up_button_down"]
-[connection signal="on_right_back" from="NodeKeyboard" to="ToyCarTwoWheelCharacter" method="set_right_down_button_down"]
-[connection signal="on_right_front" from="NodeKeyboard" to="ToyCarTwoWheelCharacter" method="set_right_up_button_down"]
-[connection signal="on_left_down_button_on" from="ToyCarTwoWheelCharacter" to="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_left_back"]
-[connection signal="on_left_up_button_on" from="ToyCarTwoWheelCharacter" to="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_left_front"]
-[connection signal="on_right_down_button_on" from="ToyCarTwoWheelCharacter" to="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_right_back"]
-[connection signal="on_right_up_button_on" from="ToyCarTwoWheelCharacter" to="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" method="set_motor_right_front"]
-[connection signal="on_front_left_motor_speed_changed" from="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarTwoWheelCharacter/WheelFrontLeft" method="set_motor_from_percent11"]
-[connection signal="on_front_right_motor_speed_changed" from="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarTwoWheelCharacter/WheelFrontRight" method="set_motor_from_percent11"]
-[connection signal="on_left_wheel_degree_per_second_updated" from="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarTwoWheelCharacter/WheelFrontLeft" method="set_rotation_speed_degrees_per_second"]
-[connection signal="on_right_wheel_degree_per_second_updated" from="ToyCarTwoWheelCharacter/NodeScript/MoveFromWheelHeight" to="ToyCarTwoWheelCharacter/WheelFrontRight" method="set_rotation_speed_degrees_per_second"]
-
-[editable path="ToyCarTwoWheelCharacter/WheelFrontRight"]
+[node name="ToyCarTwoWheelCharacterWithKeyboard" parent="." unique_id=1044973506 instance=ExtResource("2_cahgo")]
