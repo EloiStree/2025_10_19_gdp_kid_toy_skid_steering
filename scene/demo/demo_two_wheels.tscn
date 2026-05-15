@@ -23,3 +23,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7n1ho")
 shape = SubResource("WorldBoundaryShape3D_eih0p")
 
 [node name="ToyCarTwoWheelCharacterWithKeyboard" parent="." unique_id=1044973506 instance=ExtResource("2_cahgo")]
+
+[node name="WheelFrontLeft" parent="ToyCarTwoWheelCharacterWithKeyboard/ToyCarTwoWheelCharacter" parent_id_path=PackedInt32Array(1044973506, 442721373) index="1" unique_id=1651142550]
+rotation_speed_when_on = 90.0
+
+[node name="WheelFrontRight" parent="ToyCarTwoWheelCharacterWithKeyboard/ToyCarTwoWheelCharacter" parent_id_path=PackedInt32Array(1044973506, 442721373) index="2" unique_id=803890113]
+rotation_speed_when_on = 90.0
+
+[node name="MoveFromWheelHeight" parent="ToyCarTwoWheelCharacterWithKeyboard/ToyCarTwoWheelCharacter/NodeScript" parent_id_path=PackedInt32Array(1044973506, 442721373, 1545440961) index="0" unique_id=1129751953]
+time_to_do_full_rotation_on_pivot = 2.0
+
+[editable path="ToyCarTwoWheelCharacterWithKeyboard"]
+[editable path="ToyCarTwoWheelCharacterWithKeyboard/ToyCarTwoWheelCharacter"]
+[editable path="ToyCarTwoWheelCharacterWithKeyboard/ToyCarTwoWheelCharacter/WheelFrontRight"]

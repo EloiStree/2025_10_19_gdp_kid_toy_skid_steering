@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://djo2vxcmhpqwt"]
+
+[ext_resource type="Script" uid="uid://bma4sh5lekwu5" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input.gd" id="1_bq7k2"]
+[ext_resource type="Script" uid="uid://cfvowit3xpg72" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input_map.gd" id="2_bdnu1"]
+[ext_resource type="Script" uid="uid://e48b84xs2hs2" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_default_input_map_float.gd" id="3_3tnku"]
+[ext_resource type="PackedScene" uid="uid://dqrkjiiar83v2" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/drop/toy_car_two_wheel_ks_4036_character.tscn" id="4_7b1uu"]
+
+[node name="ToyCarTwoWheelKs4036CharacterWithKeyboard" type="Node3D" unique_id=1691292896]
+
+[node name="NodeKeyboard" type="Node" parent="." unique_id=928006496]
+script = ExtResource("1_bq7k2")
+
+[node name="NodeInputMap" type="Node" parent="." unique_id=828440740]
+script = ExtResource("2_bdnu1")
+metadata/_custom_type_script = "uid://cfvowit3xpg72"
+
+[node name="NodeInputMapFloat" type="Node" parent="." unique_id=1262316523]
+script = ExtResource("3_3tnku")
+
+[node name="ToyCarTwoWheelKs4036Character" parent="." unique_id=18320520 instance=ExtResource("4_7b1uu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13470459, 0)
+
+[connection signal="on_wheel_left_right_percent_11" from="NodeKeyboard" to="ToyCarTwoWheelKs4036Character" method="set_both_wheels_percent_power"]
+[connection signal="on_wheel_left_right_percent_11" from="NodeInputMap" to="ToyCarTwoWheelKs4036Character" method="set_both_wheels_percent_power"]
+[connection signal="on_both_wheels_percent_power_updated" from="NodeInputMapFloat" to="ToyCarTwoWheelKs4036Character" method="set_both_wheels_percent_power"]

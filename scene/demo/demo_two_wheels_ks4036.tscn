@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b2mrj0m8g7deq"]
+
+[ext_resource type="Texture2D" uid="uid://bdegcyl24msbd" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/assets/3D/blender_grid.jpg" id="1_d7ggw"]
+[ext_resource type="PackedScene" uid="uid://djo2vxcmhpqwt" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/drop/toy_car_two_wheel_ks_4036_character_with_input.tscn" id="2_d7ggw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i5anp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n1ho"]
+albedo_texture = ExtResource("1_d7ggw")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_eih0p"]
+
+[node name="Node3D" type="Node3D" unique_id=588232791]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1686566701]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 4, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_i5anp")
+surface_material_override/0 = SubResource("StandardMaterial3D_7n1ho")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1536351783]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=784289797]
+shape = SubResource("WorldBoundaryShape3D_eih0p")
+
+[node name="ToyCarTwoWheelKs4036CharacterWithKeyboard" parent="." unique_id=1691292896 instance=ExtResource("2_d7ggw")]
+
+[node name="Camera3D" type="Camera3D" parent="ToyCarTwoWheelKs4036CharacterWithKeyboard/ToyCarTwoWheelKs4036Character" parent_id_path=PackedInt32Array(1691292896, 18320520) index="10" unique_id=807620881]
+transform = Transform3D(1, 0, 0, 0, 0.9259102, 0.3777438, 0, -0.3777438, 0.9259102, 0, 0.06537485, 0.12866215)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ToyCarTwoWheelKs4036CharacterWithKeyboard/ToyCarTwoWheelKs4036Character/Camera3D" unique_id=1328795183]
+
+[editable path="ToyCarTwoWheelKs4036CharacterWithKeyboard"]

@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dqrkjiiar83v2"]
+
+[ext_resource type="Script" uid="uid://dsox02mtqvuyb" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_ks4036_character.gd" id="1_y734y"]
+[ext_resource type="PackedScene" uid="uid://badmbu56g6cgk" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scene/element/skid_car_wheel.tscn" id="2_dya1d"]
+[ext_resource type="Script" uid="uid://bebf17enlutax" path="res://addons/2025_10_19_gdp_kid_toy_skid_steering/scripts/skid_car_move_by_double_wheel_size.gd" id="3_a25ef"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3jt5p"]
+size = Vector3(0.11192322, 0.033676147, 0.03996277)
+
+[sub_resource type="BoxMesh" id="BoxMesh_22x1q"]
+
+[node name="ToyCarTwoWheelKs4036Character" type="CharacterBody3D" unique_id=18320520 node_paths=PackedStringArray("character_to_move", "car_center_reference_node", "left_wheel_reference_node", "right_wheel_reference_node", "right_wheel_top_radius_reference_node")]
+script = ExtResource("1_y734y")
+character_to_move = NodePath(".")
+car_center_reference_node = NodePath("WheelFrontLeft")
+left_wheel_reference_node = NodePath("PivotLeftWheel")
+right_wheel_reference_node = NodePath("PivotRightWheel")
+right_wheel_top_radius_reference_node = NodePath("WheelFrontRight/WheelHeightAnchor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=118053707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00034332275, -8.392334e-05, 0.0015335083)
+shape = SubResource("BoxShape3D_3jt5p")
+
+[node name="WheelFrontCenter" type="Node3D" parent="." unique_id=1110978150]
+
+[node name="WheelFrontLeft" parent="." unique_id=1651142550 instance=ExtResource("2_dya1d")]
+transform = Transform3D(-0.475, 0, 0, 0, 0.475, -7.172301e-08, 0, 7.172301e-08, 0.475, -0.037, 0, 0)
+rotation_speed_when_on = 360.0
+
+[node name="WheelFrontRight" parent="." unique_id=1114521606 instance=ExtResource("2_dya1d")]
+transform = Transform3D(0.475, 0, 0, 0, 0.475, 0, 0, 0, 0.475, 0.037, 0, 0)
+rotation_speed_when_on = 360.0
+
+[node name="WheelHeight" type="Node3D" parent="." unique_id=2071338035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07739943, 0.032506943, -0.050843872)
+
+[node name="NodeScript" type="Node" parent="." unique_id=490485343]
+
+[node name="MoveFromWheelHeight" type="Node" parent="NodeScript" unique_id=82230464 node_paths=PackedStringArray("what_to_move", "exost_car_to_move_direction", "pivot_left_front", "pivot_right_front", "pivot_right_wheel_top_anchor", "character_controller")]
+script = ExtResource("3_a25ef")
+forward_amplified_value = 2.0
+backward_amplified_value = 1.2
+time_to_do_full_rotation_on_pivot = 1.0
+what_to_move = NodePath("../..")
+exost_car_to_move_direction = NodePath("../..")
+pivot_left_front = NodePath("../../PivotLeftWheel")
+pivot_right_front = NodePath("../../PivotRightWheel")
+pivot_right_wheel_top_anchor = NodePath("../../WheelHeight")
+character_controller = NodePath("../..")
+fake_gravity_amount = 4.0
+
+[node name="PivotLeftWheel" type="Node3D" parent="." unique_id=467794204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.035, 0.035, 0)
+
+[node name="PivotRightWheel" type="Node3D" parent="." unique_id=1705354458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035, 0, 0)
+
+[node name="PivotRightWheelHeight" type="Node3D" parent="." unique_id=1204380042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035, 0.016, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=321350997]
+transform = Transform3D(0.07431668, 0, 0, 0, 0.031358063, 0, 0, 0, 0.03623447, 0, 0, 0)
+mesh = SubResource("BoxMesh_22x1q")
+
+[connection signal="on_left_wheel_degree_per_second_updated" from="." to="WheelFrontLeft" method="set_rotation_speed_degrees_per_second_and_active"]
+[connection signal="on_right_wheel_degree_per_second_updated" from="." to="WheelFrontRight" method="set_rotation_speed_degrees_per_second_and_active"]
+[connection signal="on_front_left_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelFrontLeft" method="set_motor_from_percent11"]
+[connection signal="on_front_right_motor_speed_changed" from="NodeScript/MoveFromWheelHeight" to="WheelFrontRight" method="set_motor_from_percent11"]
+[connection signal="on_left_wheel_degree_per_second_updated" from="NodeScript/MoveFromWheelHeight" to="WheelFrontLeft" method="set_rotation_speed_degrees_per_second"]
+[connection signal="on_right_wheel_degree_per_second_updated" from="NodeScript/MoveFromWheelHeight" to="WheelFrontRight" method="set_rotation_speed_degrees_per_second"]
+
+[editable path="WheelFrontRight"]
