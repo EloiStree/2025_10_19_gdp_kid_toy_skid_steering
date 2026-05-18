@@ -29,4 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9259102, 0.3777438, 0, -0.3777438, 0.92591
 
 [node name="OmniLight3D" type="OmniLight3D" parent="ToyCarTwoWheelKs4036CharacterWithKeyboard/ToyCarTwoWheelKs4036Character/Camera3D" unique_id=1328795183]
 
+[node name="XRNode3DLeft" type="XRNode3D" parent="." unique_id=1758324322]
+unique_name_in_owner = true
+
 [editable path="ToyCarTwoWheelKs4036CharacterWithKeyboard"]

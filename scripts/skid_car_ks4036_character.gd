@@ -1,7 +1,6 @@
 class_name SkidCarKS4036Character
 extends Node
 
-
 signal on_linear_velocity_updated(linear_velocity: float)
 signal on_angular_velocity_updated(angular_velocity: float)
 signal on_left_wheel_percent_power_updated(percent_power: float)
@@ -76,7 +75,6 @@ func set_right_wheel_percent_power(percent_power: float) -> void:
 	_right_wheel_percent_power = clamp(percent_power, -1.0, 1.0)
 
 
-
 func set_both_wheels_percent_power(left_percent_power: float, right_percent_power: float) -> void:
 	set_left_wheel_percent_power(left_percent_power)
 	set_right_wheel_percent_power(right_percent_power)
@@ -87,11 +85,123 @@ func override_angle_per_second_in_degree(new_rotation_per_second_in_degree: floa
 									   (rotation_per_second_in_degree / 360.0) * 0.001
 
 
+## SIMULATE CONTROLLER OF FOUR BUTTONS OF KS4036 (FRONT LEFT, FRONT RIGHT, BACK LEFT, BACK RIGHT)
+func set_with_four_buttons(front_left: bool, front_right: bool, back_left: bool, back_right: bool) -> void:
+	
+	if front_left 		and front_right 		and back_left 		and back_right:
+		set_both_wheels_percent_power(0,0)
+
+	elif not front_left and front_right 		and back_left 		and back_right:
+		set_both_wheels_percent_power(-1,0)
+
+	elif front_left 	and not front_right 	and back_left 		and back_right:
+		set_both_wheels_percent_power(0,-1)
+
+	elif not front_left and not front_right 	and back_left 		and back_right:
+		set_both_wheels_percent_power(-1,-1)
+
+	elif front_left 	and front_right 		and not back_left 	and back_right:
+		set_both_wheels_percent_power(1,0)
+
+	elif not front_left and front_right 		and not back_left 	and back_right:
+		set_both_wheels_percent_power(0,0)
+
+	elif  front_left 	and not front_right 	and not back_left 	and back_right:
+		set_both_wheels_percent_power(1,-1)
+
+	elif not front_left and not front_right 	and not back_left 	and back_right:
+		set_both_wheels_percent_power(0,-1)
+
+
+	elif front_left 	and front_right 		and back_left 		and not back_right:
+		set_both_wheels_percent_power(0,1)
+
+	elif not front_left and front_right 		and back_left 		and not  back_right:
+		set_both_wheels_percent_power(-1,1)
+
+	elif front_left 	and not front_right 	and back_left 		and not  back_right:
+		set_both_wheels_percent_power(0,0)
+
+	elif not front_left and not front_right 	and back_left 		and not  back_right:
+		set_both_wheels_percent_power(-1,0)
+
+	elif front_left 	and front_right 		and not back_left 	and not  back_right:
+		set_both_wheels_percent_power(1,1)
+
+	elif not front_left 	and front_right 		and not back_left 	and not  back_right:
+		set_both_wheels_percent_power(0,1)
+
+	elif  front_left 	and not front_right 	and not back_left 	and not  back_right:
+		set_both_wheels_percent_power(1,0)
+
+	elif not front_left and not front_right 	and not back_left 	and not  back_right:
+		set_both_wheels_percent_power(0,0)
+	pass
+
+
+## SET WITH A SIMPLE JOYSTICK TYPE ARROW
+func set_with_one_joystick_using_a_threshold_of_50_percent(joystick_input: Vector2):
+	set_with_one_joystick_using_a_threshold(joystick_input, 0.5)
+
+## SET WITH A SIMPLE JOYSTICK TYPE ARROW
+func set_with_one_joystick_using_a_threshold(joystick_input: Vector2, threshold: float):
+	var is_left = joystick_input.x < -threshold
+	var is_right = joystick_input.x > threshold
+	var is_forward = joystick_input.y >threshold
+	var is_backward = joystick_input.y <-threshold
+
+	if is_left and is_forward:
+		set_both_wheels_percent_power(0.5, 1.0)  
+	elif is_right and is_forward:
+		set_both_wheels_percent_power(1.0, 0.5)  
+	elif is_left and is_backward:
+		set_both_wheels_percent_power(-0.5, -1.0)  
+	elif is_right and is_backward:
+		set_both_wheels_percent_power(-1.0, -0.5)
+
+	elif is_left and not is_right:
+		set_both_wheels_percent_power(0.0, 1.0)  
+	elif is_right and not is_left:
+		set_both_wheels_percent_power(1.0, 0.0)  
+	elif is_forward and not is_backward:
+		set_both_wheels_percent_power(1.0, 1.0)  
+	elif is_backward and not is_forward:
+		set_both_wheels_percent_power(-1.0, -1.0)
+	else :
+		set_both_wheels_percent_power(0.0, 0.0)
+
+
+func set_with_one_joystick(joystick_input: Vector2):
+	var forward = joystick_input.y          
+	var turn   = -joystick_input.x            	
+
+	if joystick_input.length() < 0.1:
+		set_both_wheels_percent_power(0.0, 0.0)
+		return
+	
+	var left_wheel  = forward - turn
+	var right_wheel = forward + turn
+	
+	var max_power = max(abs(left_wheel), abs(right_wheel))
+	if max_power > 1.0:
+		left_wheel  /= max_power
+		right_wheel /= max_power
+	
+	set_both_wheels_percent_power(left_wheel, right_wheel)
+
+
+
+
+## SET WITH THE TWO JOYSTICKS LEFT RIGHT
+func set_with_double_joystick(left_joystick: Vector2, right_joystick: Vector2):
+	set_both_wheels_percent_power(left_joystick.y, right_joystick.y)
+	
 
 
 func _physics_process(delta: float) -> void:
 	if not character_to_move:
 		return
+
 	refresh_wheel_parameters()
 	
 	# ROBOT CONTROL AND ODEMTRY CALCULATIONS
@@ -115,23 +225,17 @@ func _physics_process(delta: float) -> void:
 	
 	# === Apply rotation ===
 	character_to_move.rotation.y += angular_velocity * delta
-
-	## add a fake gravity of linear
-	character_to_move.velocity.y -= fake_gravity
-
+	
 	# Apply linear velocity in forward direction
 	var forward_direction = -character_to_move.global_transform.basis.z
 	character_to_move.velocity.x = forward_direction.x * linear_velocity
 	character_to_move.velocity.z = forward_direction.z * linear_velocity
 	
-	character_to_move.move_and_slide()
+	if not character_to_move.is_on_floor():
+		character_to_move.velocity.y -= fake_gravity
 
-	
-	# if Engine.is_editor_hint() or OS.is_debug_build():
-	# 	if abs(_left_wheel_percent_power) > 0.01 or abs(_right_wheel_percent_power) > 0.01:
-	# 		print("L: %.2f  R: %.2f | Lin: %.3f m/s | Ang: %.2f rad/s" % 
-	# 			[_left_wheel_percent_power, _right_wheel_percent_power, linear_velocity, angular_velocity])
-			
+	character_to_move.move_and_slide()
+				
 	on_linear_velocity_updated.emit(linear_velocity)
 	on_angular_velocity_updated.emit(angular_velocity)
 	on_left_wheel_percent_power_updated.emit(_left_wheel_percent_power)
@@ -147,6 +251,9 @@ func _physics_process(delta: float) -> void:
 	
 	on_left_wheel_current_rotation_updated.emit(left_rotation_in_degree_total)
 	on_right_wheel_current_rotation_updated.emit(right_rotation_in_degree_total)
+
+
+
 
 
 
@@ -177,3 +284,4 @@ func set_motor_right_backward(is_on: bool) -> void:
 func set_motors_off() -> void:
 	set_left_wheel_percent_power(0.0)
 	set_right_wheel_percent_power(0.0)
+	
